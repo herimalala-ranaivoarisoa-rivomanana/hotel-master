@@ -1,0 +1,1 @@
+get http://localhost:3000/api/bookings/check?roomId=61a23c921c27bf6a306e5413&checkInDate=2021-12-01T23:00:00.000Z&checkOutDate=2021-12-02T23:00:00.000Z
