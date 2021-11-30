@@ -28,7 +28,7 @@ const NewPassword = () => {
             router.push('/login')
         }
 
-    }, [dispatch, success, error, router])
+    }, [dispatch, success, error])
 
 
     const submitHandler = (e) => {

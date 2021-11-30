@@ -43,7 +43,7 @@ const UpdateUser = () => {
             dispatch({ type: UPDATE_USER_RESET })
         }
 
-    }, [dispatch, isUpdated, userId, user, error, router])
+    }, [dispatch, isUpdated, userId, user, error])
 
 
     const submitHandler = (e) => {

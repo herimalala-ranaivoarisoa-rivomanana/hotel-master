@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/link-passhref */
-/* eslint-disable @next/next/no-img-element */
 import React, { useEffect } from 'react'
 import Link from 'next/link'
 

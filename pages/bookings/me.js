@@ -15,7 +15,7 @@ const MyBookingsPage = () => {
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store)=>async ({ req}) => {
+export const getServerSideProps = wrapper.getServerSideProps((store)=>async ({ req }) => {
     const session = await getSession({ req })
 
     if (!session) {

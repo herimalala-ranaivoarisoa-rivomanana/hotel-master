@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import { toast } from 'react-toastify'
@@ -49,8 +48,7 @@ const Profile = () => {
             dispatch({ type: UPDATE_PROFILE_RESET })
         }
 
-
-    }, [dispatch, isUpdated, error, loadedUser, router])
+    }, [dispatch, isUpdated, error, loadedUser])
 
 
     const submitHandler = (e) => {
@@ -136,7 +134,7 @@ const Profile = () => {
                                     <div className='d-flex align-items-center'>
                                         <div>
                                             <figure className='avatar mr-3 item-rtl'>
-                                                <Image
+                                                <img
                                                     src={avatarPreview}
                                                     className='rounded-circle'
                                                     alt='image'

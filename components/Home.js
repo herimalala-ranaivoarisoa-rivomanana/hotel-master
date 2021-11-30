@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
@@ -25,7 +24,6 @@ const Home = () => {
     useEffect(() => {
         toast.error(error)
         dispatch(clearErrors())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handlePagination = (pageNumber) => {

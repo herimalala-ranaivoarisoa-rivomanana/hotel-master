@@ -10,8 +10,8 @@ const RoomItem = ({ room }) => {
                     className="card-img-top mx-auto"
                     src={room.images[0].url}
                     height={170}
-                    width={100}
-                    alt=""
+                    width="100%"
+                    alt={`${room.name} image`}
                 />
                 <div className="card-body d-flex flex-column">
                     <h5 className="card-title">

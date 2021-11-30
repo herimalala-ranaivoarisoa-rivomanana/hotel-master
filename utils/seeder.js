@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 
 const rooms = require('../data/rooms')
 
-mongoose.connect('mongodb+srv://rivo:Lasolution.3352@nodeexpress.uogl0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://ghulamabbas_bookit:bookit258@bookit.ghtfw.mongodb.net/bookit?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    //useFindAndModify: false,
-   // useCreateIndex: true
+    useFindAndModify: false,
+    useCreateIndex: true
 })
 
 const seedRooms = async () => {

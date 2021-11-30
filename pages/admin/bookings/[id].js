@@ -15,7 +15,6 @@ const BookingDetailsPage = () => {
     )
 }
 
-
 export const getServerSideProps = wrapper.getServerSideProps((store)=>async ({ req, params}) => {
     const session = await getSession({ req })
 

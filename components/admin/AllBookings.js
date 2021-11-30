@@ -41,7 +41,7 @@ const AllBookings = () => {
         }
 
 
-    }, [dispatch, deleteError, isDeleted, error, router])
+    }, [dispatch, deleteError, isDeleted])
 
 
     const setBookings = () => {

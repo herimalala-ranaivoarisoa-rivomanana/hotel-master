@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const  timeZone = require('mongoose-timezone')
 
 const roomSchema = new mongoose.Schema({
     name: {
@@ -115,6 +114,4 @@ const roomSchema = new mongoose.Schema({
 
 })
 
-roomSchema.plugin(timeZone)
 module.exports = mongoose.models.Room || mongoose.model('Room', roomSchema);
-

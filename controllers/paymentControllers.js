@@ -83,7 +83,7 @@ const webhookCheckout = catchAsyncErrors(async (req, res) => {
                 paidAt: Date.now()
             })
 
-            res.status(200).json({ success: true }).end()
+            res.status(200).json({ success: true })
 
         }
 

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import ButtonLoader from '../layout/ButtonLoader'
@@ -74,7 +73,7 @@ const UpdateRoom = () => {
             dispatch({ type: UPDATE_ROOM_RESET })
         }
 
-    }, [dispatch, error, roomDetailsError, isUpdated, room, id, router])
+    }, [dispatch, error, roomDetailsError, isUpdated, room, id])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -133,7 +132,7 @@ const UpdateRoom = () => {
                 <div className="container container-fluid">
                     <div className="row wrapper">
                         <div className="col-10 col-lg-8">
-                            <form className="shadow-lg" onSubmit={submitHandler} encType="multipart/form-data">
+                            <form className="shadow-lg" onSubmit={submitHandler} enctype="multipart/form-data">
                                 <h1 className="mb-4">Update Room</h1>
                                 <div className="form-group">
                                     <label htmlFor="name_field">Name</label>
@@ -310,7 +309,7 @@ const UpdateRoom = () => {
 
                                     {imagesPreview.map(img => (
 
-                                        <Image
+                                        <img
                                             src={img}
                                             key={img}
                                             alt="Images Preview"
@@ -323,7 +322,7 @@ const UpdateRoom = () => {
 
                                     {oldImages && oldImages.map(img => (
 
-                                        <Image
+                                        <img
                                             src={img.url}
                                             key={img.public_id}
                                             alt="Images Preview"
