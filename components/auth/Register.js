@@ -36,7 +36,7 @@ const Register = () => {
             dispatch(clearErrors())
         }
 
-    }, [dispatch, success, error])
+    }, [dispatch, success, error, router])
 
 
     const submitHandler = (e) => {

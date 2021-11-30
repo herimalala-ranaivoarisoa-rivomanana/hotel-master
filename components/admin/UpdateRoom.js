@@ -73,7 +73,7 @@ const UpdateRoom = () => {
             dispatch({ type: UPDATE_ROOM_RESET })
         }
 
-    }, [dispatch, error, roomDetailsError, isUpdated, room, id])
+    }, [dispatch, error, roomDetailsError, isUpdated, room, id, router])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -132,7 +132,7 @@ const UpdateRoom = () => {
                 <div className="container container-fluid">
                     <div className="row wrapper">
                         <div className="col-10 col-lg-8">
-                            <form className="shadow-lg" onSubmit={submitHandler} enctype="multipart/form-data">
+                            <form className="shadow-lg" onSubmit={submitHandler} encType="multipart/form-data">
                                 <h1 className="mb-4">Update Room</h1>
                                 <div className="form-group">
                                     <label htmlFor="name_field">Name</label>

@@ -48,7 +48,7 @@ const Profile = () => {
             dispatch({ type: UPDATE_PROFILE_RESET })
         }
 
-    }, [dispatch, isUpdated, error, loadedUser])
+    }, [dispatch, isUpdated, error, loadedUser, router])
 
 
     const submitHandler = (e) => {
