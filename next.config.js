@@ -18,7 +18,7 @@ module.exports = {
       SMTP_PASSWORD:'Lasolution.3352',
       SMTP_FROM_NAME:'BookIT',
       SMTP_FROM_EMAIL:'ranaivoarisoa@gmx.fr',
-      NEXTAUTH_URL:'https://easyroombooker.vercel.app',
+      NEXTAUTH_URL:'https://easybooker.vercel.app',
       
   },
   reactStrictMode: true,
