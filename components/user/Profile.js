@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import { toast } from 'react-toastify'
@@ -48,8 +49,8 @@ const Profile = () => {
             dispatch({ type: UPDATE_PROFILE_RESET })
         }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dispatch, isUpdated, error, loadedUser])
+
+    }, [dispatch, isUpdated, error, loadedUser, router])
 
 
     const submitHandler = (e) => {
@@ -135,7 +136,7 @@ const Profile = () => {
                                     <div className='d-flex align-items-center'>
                                         <div>
                                             <figure className='avatar mr-3 item-rtl'>
-                                                <img
+                                                <Image
                                                     src={avatarPreview}
                                                     className='rounded-circle'
                                                     alt='image'

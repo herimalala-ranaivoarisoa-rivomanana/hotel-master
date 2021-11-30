@@ -38,7 +38,7 @@ const AllUsers = () => {
             dispatch({ type: DELETE_USER_RESET })
         }
 
-    }, [dispatch, error, isDeleted])
+    }, [deleteError, dispatch, error, isDeleted, router])
 
 
     const setUsers = () => {

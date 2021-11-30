@@ -38,7 +38,7 @@ const AllRooms = () => {
             dispatch({ type: DELETE_ROOM_RESET })
         }
 
-    }, [dispatch, deleteError, isDeleted])
+    }, [dispatch, deleteError, isDeleted, error, router])
 
 
     const setRooms = () => {

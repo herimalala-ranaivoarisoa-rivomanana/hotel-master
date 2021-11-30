@@ -141,7 +141,7 @@ const RoomDetails = () => {
             dispatch({ type: CHECK_BOOKING_RESET })
         }
 
-    }, [dispatch, id])
+    }, [dispatch, error, id])
 
 
     return (
