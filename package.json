@@ -1,6 +1,7 @@
 {
   "name": "hotel",
   "private": true,
+  "node":"18.16.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
