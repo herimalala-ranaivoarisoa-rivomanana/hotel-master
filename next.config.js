@@ -23,7 +23,7 @@ module.exports = {
   },
   reactStrictMode: true,
   images:{
-    domains:['res.cloudinary.com','a0.muscache.com']
+    domains:['res.cloudinary.com','a0.muscache.com','picsum.photos']
   },
   typescript: {
     // !! WARN !!
