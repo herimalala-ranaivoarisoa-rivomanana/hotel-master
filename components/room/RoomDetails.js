@@ -13,7 +13,7 @@ import { Carousel } from 'react-bootstrap'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify';
-import { clearErrors } from '../../redux/actions/roomActions'
+
 
 import { checkBooking, getBookedDates } from '../../redux/actions/bookingActions'
 import { CHECK_BOOKING_RESET } from '../../redux/constants/bookingConstants'
@@ -132,10 +132,8 @@ const RoomDetails = () => {
 
     useEffect(() => {
 
-        dispatch(getBookedDates(id))
-
-        toast.error(error)
-        dispatch(clearErrors())
+        if (!error && id) dispatch(getBookedDates(id))
+        if (error) toast.error(error)
 
         return () => {
             dispatch({ type: CHECK_BOOKING_RESET })
@@ -143,6 +141,7 @@ const RoomDetails = () => {
 
     }, [dispatch, error, id])
 
+    if (error) return <div role="alert" className="container alert alert-danger mt-5">{error}</div>;
 
     return (
         <>

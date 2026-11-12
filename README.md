@@ -75,3 +75,19 @@ Room photos load directly to avoid the observed Vercel image optimization error
 `INVALID_IMAGE_OPTIMIZE_REQUEST`. Missing images show the local
 `public/images/room-unavailable.svg`. This does not recover deleted photos:
 re-upload the original room images from the admin interface to restore them.
+
+## A 504 on the home page or `/api/rooms`
+
+If Vercel logs say the Mongoose URI is `undefined`, `DB_URI` is missing from
+that deployment. Add it to the Vercel project that serves your domain, select
+Production and Preview, then redeploy: existing deployments do not receive
+newly saved environment variables. Do not put database credentials in chat,
+Git, or browser configuration. Use a valid MongoDB Atlas connection string and
+verify the database user and the network access allowed for your deployment.
+
+Database connections are now awaited per request, shared across concurrent
+requests, and use short connection timeouts. Missing or unavailable database
+configuration returns HTTP 503 instead of leaving queries buffered until Vercel
+kills the function. The home and room detail pages query the database directly
+on the server, avoiding a second serverless invocation of the app's own API.
+This error handling does not replace configuring a working database.

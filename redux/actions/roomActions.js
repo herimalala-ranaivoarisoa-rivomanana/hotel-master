@@ -47,7 +47,7 @@ export const getRooms = (req, currentPage = 1, location = '', guests, category) 
         if (guests) link = link.concat(`&guestCapacity=${guests}`)
         if (category) link = link.concat(`&category=${category}`)
 
-        const { data } = await axios.get(link)
+        const { data } = await axios.get(link, { timeout: 7000 })
 
         dispatch({
             type: ALL_ROOMS_SUCCESS,
@@ -57,7 +57,7 @@ export const getRooms = (req, currentPage = 1, location = '', guests, category) 
     } catch (error) {
         dispatch({
             type: ALL_ROOMS_FAIL,
-            payload: error.response.data.message
+            payload: (error.response && error.response.data && error.response.data.message) || 'Rooms are temporarily unavailable. Please try again later.'
         })
     }
 }
@@ -77,7 +77,7 @@ export const getRoomDetails = (req, id) => async (dispatch) => {
             url = `/api/rooms/${id}`
         }
 
-        const { data } = await axios.get(url)
+        const { data } = await axios.get(url, { timeout: 7000 })
 
         dispatch({
             type: ROOM_DETAILS_SUCCESS,
@@ -87,7 +87,7 @@ export const getRoomDetails = (req, id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: ROOM_DETAILS_FAIL,
-            payload: error.response.data.message
+            payload: (error.response && error.response.data && error.response.data.message) || 'Rooms are temporarily unavailable. Please try again later.'
         })
     }
 }
