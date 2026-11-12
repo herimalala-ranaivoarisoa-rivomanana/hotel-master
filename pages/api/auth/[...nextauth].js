@@ -5,6 +5,7 @@ import User from '../../../models/user'
 import dbConnect from '../../../config/dbConnect'
 
 export default NextAuth({
+    secret: process.env.NEXTAUTH_SECRET,
     session: {
         jwt: true
     },

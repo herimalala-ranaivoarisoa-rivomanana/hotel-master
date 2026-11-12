@@ -35,7 +35,7 @@ const Profile = () => {
                 name: loadedUser.name,
                 email: loadedUser.email
             })
-            setAvatarPreview(loadedUser.avatar.url)
+            setAvatarPreview((loadedUser.avatar && loadedUser.avatar.url) || '/images/default_avatar.jpg')
         }
 
         if (error) {

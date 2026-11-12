@@ -1,5 +1,5 @@
 import User from '../models/user'
-import cloudinary from 'cloudinary'
+import { uploadImages, deleteImages, cleanupImages } from '../utils/cloudinary'
 
 import ErrorHandler from '../utils/errorHandler'
 import catchAsyncErrors from '../middlewares/catchAsyncErrors'
@@ -8,34 +8,21 @@ import sendEmail from '../utils/sendEmail'
 import absoluteUrl from 'next-absolute-url'
 import crypto from 'crypto'
 
-// Setting up cloudinary config
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
-})
-
-
 // Register user   =>   /api/auth/register
 const registerUser = catchAsyncErrors(async (req, res) => {
 
-    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-        folder: 'bookit/avatars',
-        width: '150',
-        crop: 'scale'
-    })
+    const avatar = req.body.avatar
+        ? (await uploadImages([req.body.avatar], { folder: 'bookit/avatars', width: 150, crop: 'scale' }))[0]
+        : { public_id: 'default_avatar', url: '/images/default_avatar.jpg' };
 
     const { name, email, password } = req.body;
 
-    const user = await User.create({
-        name,
-        email,
-        password,
-        avatar: {
-            public_id: result.public_id,
-            url: result.secure_url
-        }
-    });
+    try {
+        await User.create({ name, email, password, avatar });
+    } catch (error) {
+        await cleanupImages([avatar]);
+        throw error;
+    }
 
     res.status(200).json({
         success: true,
@@ -57,9 +44,11 @@ const currentUserProfile = catchAsyncErrors(async (req, res) => {
 })
 
 // Update user profile   =>   /api/me/update
-const updateProfile = catchAsyncErrors(async (req, res) => {
+const updateProfile = catchAsyncErrors(async (req, res, next) => {
 
     const user = await User.findById(req.user._id);
+
+    if (!user) return next(new ErrorHandler('User not found', 404));
 
     if (user) {
         user.name = req.body.name;
@@ -68,28 +57,21 @@ const updateProfile = catchAsyncErrors(async (req, res) => {
         if (req.body.password) user.password = req.body.password;
     }
 
-    // Update avatar
-    if (req.body.avatar !== '') {
-
-        const image_id = user.avatar.public_id;
-
-        // Delete user previous image/avatar
-        await cloudinary.v2.uploader.destroy(image_id);
-
-        const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-            folder: 'bookit/avatars',
-            width: '150',
-            crop: 'scale'
-        })
-
-        user.avatar = {
-            public_id: result.public_id,
-            url: result.secure_url
-        }
-
+    const previousAvatar = user.avatar;
+    let avatar;
+    if (req.body.avatar) {
+        avatar = (await uploadImages([req.body.avatar], {
+            folder: 'bookit/avatars', width: 150, crop: 'scale'
+        }))[0];
+        user.avatar = avatar;
     }
-
-    await user.save();
+    try {
+        await user.save();
+    } catch (error) {
+        if (avatar) await cleanupImages([avatar]);
+        throw error;
+    }
+    if (avatar) await cleanupImages([previousAvatar]);
 
     res.status(200).json({
         success: true
@@ -232,7 +214,7 @@ const updateUser = catchAsyncErrors(async (req, res) => {
 
 
 // Delete user    =>   /api/admin/users/:id
-const deleteUser = catchAsyncErrors(async (req, res) => {
+const deleteUser = catchAsyncErrors(async (req, res, next) => {
 
     const user = await User.findById(req.query.id);
 
@@ -242,7 +224,7 @@ const deleteUser = catchAsyncErrors(async (req, res) => {
 
     // Remove avatar 
     const image_id = user.avatar.public_id;
-    await cloudinary.v2.uploader.destroy(image_id)
+    await deleteImages([{ public_id: image_id }])
 
 
     await user.remove();

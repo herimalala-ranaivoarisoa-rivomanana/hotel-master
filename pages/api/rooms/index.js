@@ -17,3 +17,5 @@ handler
     .post(newRoom)
 
 export default handler;
+
+export const config = { api: { bodyParser: { sizeLimit: '10mb' } } };
