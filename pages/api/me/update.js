@@ -15,3 +15,5 @@ handler
     .put(updateProfile)
 
 export default handler;
+
+export const config = { api: { bodyParser: { sizeLimit: '10mb' } } };

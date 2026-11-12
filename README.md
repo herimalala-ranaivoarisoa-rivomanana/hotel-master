@@ -32,3 +32,27 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Server configuration and Cloudinary
+
+Copy `.env.example` to `.env.local` for local development. On Vercel, add the
+same variables in Project Settings → Environment Variables, then redeploy.
+Never commit `.env.local` or put server credentials in `next.config.js`'s `env`:
+Next.js embeds entries from that block into browser bundles.
+
+Set `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY` and `CLOUDINARY_API_SECRET`
+from the same Cloudinary account. Use newly generated credentials: credentials
+previously committed in this repository must be rotated (Cloudinary, MongoDB,
+Stripe and SMTP). Removing them from the current files does not remove them
+from Git history or previous deployments. Only the Stripe publishable key
+(`NEXT_PUBLIC_STRIPE_API_KEY`) belongs in the browser.
+
+Image API routes accept JSON bodies up to 10 MB, including base64 overhead.
+Supported uploads are JPEG, PNG, WebP and GIF data URLs. Registration without
+an image uses the local default avatar. Image replacement keeps the previous
+files until the new upload and database write succeed. Failed partial uploads
+are cleaned up; cleanup failures are logged for later retry.
+
+Run `npm test` for mocked Cloudinary regression checks and `npm run build` for
+Next.js validation. A real upload also requires a working MongoDB database and
+valid Cloudinary credentials; mocked tests do not validate the remote account.
