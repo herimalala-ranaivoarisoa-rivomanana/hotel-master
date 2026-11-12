@@ -5,35 +5,13 @@ import { uploadImages, deleteImages, cleanupImages } from '../utils/cloudinary'
 
 import ErrorHandler from '../utils/errorHandler'
 import catchAsyncErrors from '../middlewares/catchAsyncErrors'
-import APIFeatures from '../utils/apiFeatures'
+import { getRoomsData } from '../services/roomQueries'
 
 // Create all rooms   =>   /api/rooms
 const allRooms = catchAsyncErrors(async (req, res) => {
 
-    const resPerPage = 4;
-
-    const roomsCount = await Room.countDocuments();
-
-    let apiFeatures = new APIFeatures(Room.find(), req.query)
-        .search()
-        .filter()
-
-    let rooms = await apiFeatures.query;
-    let filteredRoomsCount = rooms.length;
-
-    apiFeatures = new APIFeatures(Room.find(),req.query)
-    .search()
-    .filter()
-    apiFeatures.pagination(resPerPage)
-    rooms = await apiFeatures.query;
-
-    res.status(200).json({
-        success: true,
-        roomsCount,
-        resPerPage,
-        filteredRoomsCount,
-        rooms
-    })
+    const data = await getRoomsData(req.query);
+    res.status(200).json({ success: true, ...data });
 
 })
 

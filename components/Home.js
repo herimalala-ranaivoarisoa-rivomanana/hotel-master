@@ -6,14 +6,13 @@ import Pagination from 'react-js-pagination'
 
 import RoomItem from './room/RoomItem'
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify';
 
-import { clearErrors } from '../redux/actions/roomActions'
+
 
 const Home = () => {
 
-    const dispatch = useDispatch()
     const router = useRouter()
 
     const { rooms, resPerPage, roomsCount, filteredRoomsCount, error } = useSelector(state => state.allRooms);
@@ -22,9 +21,8 @@ const Home = () => {
     page = Number(page)
 
     useEffect(() => {
-        toast.error(error)
-        dispatch(clearErrors())
-    }, [dispatch, error])
+        if (error) toast.error(error)
+    }, [error])
 
     const handlePagination = (pageNumber) => {
 
@@ -64,10 +62,11 @@ const Home = () => {
                 </Link>
 
                 <div className="row">
-                    {rooms && rooms.length === 0 ?
+                    {error && <div role="alert" className="alert alert-danger mt-5 w-100">{error}</div>}
+                    {!error && rooms && rooms.length === 0 ?
                         <div className="alert alert-danger mt-5 w-100"><b>No Rooms.</b></div>
                         :
-                        rooms && rooms.map(room => (
+                        !error && rooms && rooms.map(room => (
                             <RoomItem key={room._id} room={room} />
                         ))
                     }

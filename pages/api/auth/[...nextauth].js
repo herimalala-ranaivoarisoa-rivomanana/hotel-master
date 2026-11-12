@@ -13,7 +13,7 @@ export default NextAuth({
         Providers.Credentials({
             async authorize(credentials) {
 
-                dbConnect();
+                await dbConnect();
 
                 const { email, password } = credentials;
 

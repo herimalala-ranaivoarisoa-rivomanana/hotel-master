@@ -8,7 +8,14 @@ import onError from '../../../middlewares/errors'
 
 const handler = nc({ onError });
 
-dbConnect();
+handler.use(async (req, res, next) => {
+    try {
+        await dbConnect();
+        return next();
+    } catch (error) {
+        return next(error);
+    }
+});
 
 handler
     .use(isAuthenticatedUser)
