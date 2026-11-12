@@ -1,16 +1,18 @@
 import React from 'react'
-import Image from 'next/image'
+import RoomImage from '../media/RoomImage'
 import Link from 'next/link'
 
 const RoomItem = ({ room }) => {
     return (
         <div className="col-sm-12 col-md-6 col-lg-3 my-3">
             <div className="card p-2">
-                <Image
+                <RoomImage
                     className="card-img-top mx-auto"
-                    src={room.images[0].url}
-                    height={170}
-                    width="100%"
+                    src={room.images && room.images[0] && room.images[0].url}
+                    height={240}
+                    width={360}
+                    layout="responsive"
+                    objectFit="cover"
                     alt={`${room.name} image`}
                 />
                 <div className="card-body d-flex flex-column">

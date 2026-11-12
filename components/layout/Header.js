@@ -46,7 +46,11 @@ const Header = () => {
                             >
                                 <figure className="avatar avatar-nav">
                                     <img
-                                        src={user.avatar && user.avatar.url}
+                                        src={(user.avatar && user.avatar.url) || '/images/default_avatar.jpg'}
+                                        onError={event => {
+                                            event.currentTarget.onerror = null;
+                                            event.currentTarget.src = '/images/default_avatar.jpg';
+                                        }}
                                         alt={user && user.name}
                                         className="rounded-circle"
                                     />
